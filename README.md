@@ -3,11 +3,12 @@ Tests a vcf file for unbalanced PCR templates
 
 ## Introduction
 
-This is a lightweight script test each mutation in a vcf file for PCR imbalance and is intended mainly for library prep techniques involving PCR.
+This is a lightweight script to test each mutation in a vcf file for PCR imbalance and is intended mainly for library prep techniques involving PCR.
 A well balanced set of PCR templates will all have mutant and reference alleles in more or less the same proportions. However this is not always the case. There are a number of reasons why templates might be unbalanced. The primers might preferentially amplify (or miss) specific variants. Aligners might mis-align specific reads from this region elsewhere, or reads from elsewhere to this region. One option to investigate this is to visually inspect reads using a tool such as IGV, where unbalanced reads can be obvious.
 
 ![plot](./images/offset.png)
-*Sample IGV plot of mutations calls with offset (top) and balanced (bottom) PCR templates
+
+*Sample IGV plot of mutations calls with offset (top) and balanced (bottom) PCR templates*
 
 The top image is a mutation which only appears in a subset of reads when viewed by template position, so is clearly imbalanced. The bottom image has mutant alleles spread throughout the templates in a balanced fashion. This is fine if you are only checking a few mutations, but can be difficult as the numbers increase.
 This tool is a quick way to test for this PCR offset within a vcf file, if the original bam file is available. It creates a copy of the original vcf file, with additional fields to indicate the proportion of reads which are unbalanced, according to a simple binomial test.
@@ -15,11 +16,11 @@ This tool is a quick way to test for this PCR offset within a vcf file, if the o
 ## Installation and requirements
 
 vcfPCRoffset requires python3, with the numpy and pysam modules installed. We leave it up to the user to install these as they see fit, either with pip, conda or other means.
-No installation is required, just download the vcfPCRoffset.py python script manually, or by:
+No installation is required, just download the vcfPCRoffset.py python script manually, with a proper github command, or by:
 ```
 wget https://github.com/omicsForestry/vcfPCRoffset/scripts/vcfPCRoffset.py
 ```
-None of the rest of this repository is needed. You can make it executable or add to your path if you want, or just use it as is.
+You can make it executable or add to your path if you want, or just use it as is. None of the rest of this repository is needed to run the script.
 
 
 ## Usage
@@ -51,7 +52,7 @@ options:
 
 # Required arguments
 
-The `input` option specifies the vcf file to test. The tags produced by varscan2 are expected, but other formats can be specified with optional arguments
+The `input` option specifies the path to the vcf file to test. The tags produced by varscan2 are expected, but other formats can be specified with optional arguments
 
 The `output` option specifies the path to a new output vcf file to create. This will match the format of the `input` file but with additional fields `ROR` and `ROV` to indicate the proportion of offset reads.
 
@@ -59,15 +60,15 @@ The `bam` option specifies the path to the bam file used to create the `input` v
 
 # Optional arguments
 
-The `refTag` option can be used if the vcf format specifies reference depth with a tag other than `RD`
+The `refTag` option can be used to specify an alternative tag if the vcf format specifies reference depth with a tag other than `RD`
 
-The `varTag` option can be used if the vcf format specifies variant depth with a tag other than `AD`
+The `varTag` option can be used to specify an alternative tag if the vcf format specifies variant depth with a tag other than `AD`
 
-The `refVarTag` option is used if the vcf format stores reference and variant depth together, eg: `XYZ = REF,VAR`
+The `refVarTag` option is used to specify an alternative tag if the vcf format stores reference and variant depth together, eg: `XYZ = REF,VAR`
 
-The `varRefTag` option is used if the vcf format stores variant and reference depth together, eg: `XYZ = VAR,REF`
+The `varRefTag` option is used  to specify an alternative tag if the vcf format stores variant and reference depth together, eg: `XYZ = VAR,REF`
 
-The `filter` option is used to provide a threshold to change the `FILTER` field of the vcf file, adding a filter called `PCR_bias` if either the variant or reference template reads in proportions exceeding this threshold
+The `filter` option is used to provide a threshold (between 0 and 1) to change the `FILTER` field of the vcf file, adding a filter called `PCR_bias` if either the variant or reference template reads in proportions exceeding this threshold
 
 The `tabix` option is used to compress and index the input vcf file, if not already done. The input vcf and bam files are tested for indexing. The `tabix` option is only needed if the input vcf is uncompressed, as compression might make it unusable for other tools. If this is likely to be the case, then making a copy is recommended. Tabix indexing of compressed vcf files and bam indexing is automatically performed, if needed.
 
@@ -108,7 +109,7 @@ chr3	179199217	.	A	G	.	PASS	ADP=32;WT=0;HET=1;HOM=0;NC=0	GT:GQ:SDP:DP:RD:AD:FREQ
 chr3	179203851	.	C	A	.	PASS	ADP=162;WT=0;HET=1;HOM=0;NC=0	GT:GQ:SDP:DP:RD:AD:FREQ:PVAL:RBQ:ABQ:RDF:RDR:ADF:ADR:ROR:ROV	0/1:177:162:162:110:52:32.1%:1.6611E-18:69:42:54:56:22:30:0.6502:0.4951
 chr3	179204486	.	C	A	.	PASS	ADP=331;WT=0;HET=1;HOM=0;NC=0	GT:GQ:SDP:DP:RD:AD:FREQ:PVAL:RBQ:ABQ:RDF:RDR:ADF:ADR:ROR:ROV	0/1:125:333:331:290:40:12.08%:2.5852E-13:62:43:116:174:17:23:0.3257:0.8228
 ```
-The 1st, 5th and 6th mutation have non-zero offset scores.
+The 1st, 5th and 6th mutation have non-zero offset scores (visible on the right end of each line).
 If you want to use the `filter` option (bearing in mind that `test.vcf` has now been compressed to `test.vcf.gz`):
 ```python vcfPCRoffset.py -i test.vcf -b example.bam -o res.vcf -f 0.2```
 
