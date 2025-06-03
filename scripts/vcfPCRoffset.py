@@ -1,10 +1,14 @@
+#!/usr/bin/env python3
+
+# version 0.1.0
+
 import pysam
 import scipy.stats as stats
 import argparse
 from subprocess import PIPE, Popen
 import sys
 
-parser = argparse.ArgumentParser(description='Go through vep bam, and vcf files together, making report for genes of interest.')
+parser = argparse.ArgumentParser(description='Go through vcf and bam files together, reporting PCR template offsets.')
 parser.add_argument('-i','--input', required = True, help = 'Input vcf file')
 parser.add_argument('-o','--output', required = True, help = 'Output vcf file')
 parser.add_argument('-b','--bam', required = True, help = 'Bam file to check for PCR site discrepancies')
