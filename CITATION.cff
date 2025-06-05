@@ -1,0 +1,13 @@
+cff-version: 0.1.1
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Wood"
+  given-names: "Henry M"
+  orcid: "https://orcid.org/0000-0003-3009-5904"
+title: "vcfPCRoffset"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.15602049
+version: 0.1.1
+date-released: 2024-06-05
+url: "https://github.com/omicsForestry/vcfPCRoffset"
