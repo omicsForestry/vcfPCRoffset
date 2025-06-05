@@ -1,9 +1,9 @@
 # vcfPCRoffset
-Tests a vcf file for unbalanced PCR templates
+Tests mutations in a vcf file for unbalanced PCR templates
 
 ## Introduction
 
-This is a lightweight script to test each mutation in a vcf file for PCR imbalance and is intended mainly for library prep techniques involving PCR.
+This is a lightweight script to test each mutation in a vcf file for PCR imbalance and is intended mainly for NGS library prep techniques involving PCR.
 A well balanced set of PCR templates will all have mutant and reference alleles in more or less the same proportions. However this is not always the case. There are a number of reasons why templates might be unbalanced. The primers might preferentially amplify (or miss) specific variants. Aligners might mis-align specific reads from this region elsewhere, or reads from elsewhere to this region. One option to investigate this is to visually inspect reads using a tool such as IGV, where unbalanced reads can be obvious.
 
 ![plot](./images/offset.png)
