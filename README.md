@@ -1,6 +1,11 @@
 # vcfPCRoffset
 Tests mutations in a vcf file for unbalanced PCR templates
 
+### version 0.1.1
+
+[![DOI](https://zenodo.org/badge/995412566.svg)](https://doi.org/10.5281/zenodo.15602049)
+
+
 ## Introduction
 
 This is a lightweight script to test each mutation in a vcf file for PCR imbalance and is intended mainly for NGS library prep techniques involving PCR.
